@@ -25,7 +25,44 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+            </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.22.1</version>
+                    <executions>
+                        <execution>
+                            <id>build-docker-image</id>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <configuration>
+                                <images>
+                                    <image>
+                                        <name>jumperfly/${project.artifactId}</name>
+                                        <build>
+                                            <from>openjdk:8u141-jre</from>
+                                            <entryPoint>java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /${project.build.finalName}.jar</entryPoint>
+                                            <assembly>
+                                                <descriptorRef>artifact</descriptorRef>
+                                                <targetDir>/</targetDir>
+                                            </assembly>
+                                        </build>
+                                    </image>
+                                </images>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
