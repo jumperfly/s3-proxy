@@ -15,6 +15,6 @@ branches:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker tag jumperfly/s3-proxy:latest jumperfly/s3-proxy:develop
-    docker push jumperfly/s3-proxy:develop
+    docker tag jumperfly/s3-proxy:latest jumperfly/s3-proxy:develop;
+    docker push jumperfly/s3-proxy:develop;
     fi
